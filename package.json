@@ -1,0 +1,40 @@
+{
+  "name": "fullstack2-2nd-ourcodetrip-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon --exec babel-node ./src/server.js",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wecode-bootcamp-korea/fullstack2-2nd-ourcodetrip-backend.git"
+  },
+  "keywords": [],
+  "author": "Wecode ourcodetrip",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wecode-bootcamp-korea/fullstack2-2nd-ourcodetrip-backend/issues"
+  },
+  "homepage": "https://github.com/wecode-bootcamp-korea/fullstack2-2nd-ourcodetrip-backend#readme",
+  "dependencies": {
+    "@prisma/client": "^3.3.0",
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.15.8",
+    "@babel/node": "^7.15.8",
+    "@babel/preset-env": "^7.15.8",
+    "babel-jest": "^27.3.1",
+    "eslint": "^8.1.0",
+    "jest": "^27.3.1",
+    "nodemon": "^2.0.14",
+    "prettier": "^2.4.1",
+    "prisma": "^3.3.0"
+  }
+}
