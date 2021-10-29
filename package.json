@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon --exec babel-node ./src/server.js",
-    "test": "jest"
+    "dev": "cat .env.development > .env && nodemon --exec babel-node ./src/server.js",
+    "test": "cat .env.test > .env && npx prisma migrate reset -f && jest --detectOpenHandles"
   },
   "repository": {
     "type": "git",
@@ -35,6 +36,7 @@
     "jest": "^27.3.1",
     "nodemon": "^2.0.14",
     "prettier": "^2.4.1",
-    "prisma": "^3.3.0"
+    "prisma": "^3.3.0",
+    "supertest": "^6.1.6"
   }
 }
