@@ -35,7 +35,7 @@ model User {
 
 model Platform {
   id   Int    @id @default(autoincrement())
-  name String
+  name String @unique
   User User[]
 
   @@map("platforms")
@@ -45,7 +45,7 @@ model userProfileImage {
   id        Int       @id @default(autoincrement())
   imageUrl  String    @map("image_url") @db.VarChar(2000)
   userId    Int       @map("user_id")
-  createAt  DateTime  @map("created_at")
+  createAt  DateTime  @default(now()) @map("created_at")
   isDeleted Boolean   @default(false)
   deletedAt DateTime? @map("deleted_at")
   User      User      @relation(fields: [userId], references: [id])
@@ -55,7 +55,7 @@ model userProfileImage {
 
 model Partner {
   id        Int     @id @default(autoincrement())
-  name      String
+  name      String  @unique
   introduce String?
   userId    Int     @map("user_id")
   User      User    @relation(fields: [userId], references: [id])
@@ -67,7 +67,7 @@ model Partner {
 
 model Country {
   id   Int    @id @default(autoincrement())
-  name String
+  name String @unique
   City City[]
 
   @@map("countries")
@@ -75,7 +75,7 @@ model Country {
 
 model City {
   id        Int     @id @default(autoincrement())
-  name      String
+  name      String  @unique
   countryId Int     @map("country_id")
   Country   Country @relation(fields: [countryId], references: [id])
 
@@ -99,7 +99,7 @@ model CityImage {
 
 model ServiceCategory {
   id   Int    @id @default(autoincrement())
-  name String
+  name String @unique
 
   MainCategory MainCategory[]
   @@map("service_categories")
@@ -107,7 +107,7 @@ model ServiceCategory {
 
 model MainCategory {
   id                Int             @id @default(autoincrement())
-  name              String
+  name              String          @unique
   serviceCategoryId Int             @map("service_category_id")
   ServiceCategory   ServiceCategory @relation(fields: [serviceCategoryId], references: [id])
 
@@ -117,7 +117,7 @@ model MainCategory {
 
 model SubCategory {
   id             Int          @id @default(autoincrement())
-  name           String
+  name           String       @unique
   mainCategroyId Int          @map("main_category_id")
   MainCategory   MainCategory @relation(fields: [mainCategroyId], references: [id])
 
@@ -128,7 +128,7 @@ model SubCategory {
 
 model Product {
   id            Int         @id @default(autoincrement())
-  name          String
+  name          String      @unique
   productTypeId Int         @map("product_type_id")
   createdAt     DateTime    @default(now()) @map("created_at")
   updatedAt     DateTime    @default(now()) @map("updated_at")
@@ -147,7 +147,7 @@ model Product {
 
 model ProductType {
   id   Int    @id @default(autoincrement())
-  name String
+  name String @unique
 
   Product Product[]
   @@map("product_types")
@@ -155,7 +155,7 @@ model ProductType {
 
 model OptionList {
   id   Int    @id @default(autoincrement())
-  name String
+  name String @unique
 
   ProductOption ProductOption[]
   @@map("option_list")
@@ -187,7 +187,7 @@ model ProductImage {
 
 model ImageType {
   id   Int    @id @default(autoincrement())
-  name String
+  name String @unique
 
   ProductImage ProductImage[]
   @@map("image_types")
@@ -195,7 +195,6 @@ model ImageType {
 
 model Tour {
   id               Int         @id @default(autoincrement())
-  name             String
   price            Float
   discountRate     Float?      @map("discount_rate")
   startDate        DateTime    @map("start_date")
@@ -216,7 +215,6 @@ model Tour {
 
 model Ticket {
   id            Int         @id @default(autoincrement())
-  name          String
   standardPrice Float?      @map("standard_price")
   expireDate    DateTime    @map("expire_date")
   cityId        Int         @map("city_id")
@@ -234,7 +232,7 @@ model Ticket {
 
 model TicketOption {
   id           Int    @id @default(autoincrement())
-  name         String
+  name         String @unique
   price        Float
   discountRate Float? @map("discount_rate")
   ticketId     Int    @map("ticket_id")
@@ -274,7 +272,7 @@ model Reservation {
 
 model PaymentType {
   id   Int    @id @default(autoincrement())
-  name String
+  name String @unique
 
   Reservation Reservation[]
   @@map("payment_types")
@@ -307,8 +305,8 @@ model Review {
   reservationId Int         @map("reservation_id")
   rating        Int
   content       String      @db.VarChar(1000)
-  createdAt     DateTime    @map("created_at") @db.Timestamp
-  updatedAt     DateTime    @map("updated_at") @db.Timestamp
+  createdAt     DateTime    @default(now()) @map("created_at")
+  updatedAt     DateTime    @default(now()) @map("updated_at")
   isDeleted     Boolean     @default(false) @map("is_deleted")
   deletedAt     DateTime?   @map("deleted_at")
   Reservation   Reservation @relation(fields: [reservationId], references: [id])
