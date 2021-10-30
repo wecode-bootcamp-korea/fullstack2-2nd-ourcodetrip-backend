@@ -1,2 +1,2 @@
 name,email,password,phoneNumber,platformId,isLocationAgreed,isEmailAgreed,isSmsAgreed
-테스트,test2@test.com,test@1234,010-1234-5178,1,true,true,true
+테스트,test@test.com,test@1234,010-1234-5178,1,true,true,true
