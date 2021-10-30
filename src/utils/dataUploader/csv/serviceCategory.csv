@@ -1,3 +1,5 @@
-name
-투어&티켓
-항공권
+name,query
+항공권,service=tourticket
+숙소,service=accommodation
+렌터카,service=transportation
+투어·티켓,service=airline

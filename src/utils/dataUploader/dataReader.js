@@ -36,6 +36,9 @@ export const readFile = async (fileName) => {
             if (key.startsWith('is')) {
               data[key] = JSON.parse(data[key]);
             }
+            if (key.endsWith('Date')) {
+              data[key] = new Date(data[key]);
+            }
           }
           console.log(data);
         }

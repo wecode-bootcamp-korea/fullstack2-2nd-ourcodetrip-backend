@@ -1,0 +1,10 @@
+name,serviceCategoryId,query
+투어,4,category=tour
+입장권,4,category=ticket
+액티비티,4,category=activity
+클래스,4,category=class
+스냅촬영,4,category=snap
+미식,4,category=foodie
+스파/힐링,4,category=spa_healing
+이동/교통편의,4,category=transportation
+대여,4,category=rental
