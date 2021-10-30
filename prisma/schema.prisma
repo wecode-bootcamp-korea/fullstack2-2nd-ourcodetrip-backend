@@ -112,7 +112,7 @@ model MainCategory {
   ServiceCategory   ServiceCategory @relation(fields: [serviceCategoryId], references: [id])
 
   SubCategory SubCategory[]
-  @@map("main_cateories")
+  @@map("main_categories")
 }
 
 model SubCategory {
