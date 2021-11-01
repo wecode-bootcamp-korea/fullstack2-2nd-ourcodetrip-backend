@@ -16,7 +16,8 @@ export const inputData = async (model, checkColumnName, readData, fileName) => {
 };
 
 export const checkInputData = async (model, checkColumnName, data) => {
-  if (!model || !checkColumnName || !data) {
+  if (!checkColumnName) return '';
+  if (!model || !data) {
     return new Error('some parameters are missed');
   }
   const checkData = getValueByColumn(checkColumnName, data);
@@ -29,7 +30,8 @@ export const checkInputData = async (model, checkColumnName, data) => {
 };
 
 export const getValueByColumn = (checkColumnName, data) => {
-  if (!checkColumnName || !data) return new Error('parameter is missed');
+  if (!checkColumnName) return '';
+  if (!data) return new Error('parameter is missed');
   if (checkColumnName.constructor !== String || data.constructor !== Array) {
     return new Error('invalid parameter');
   }
