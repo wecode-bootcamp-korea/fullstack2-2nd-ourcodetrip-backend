@@ -6,7 +6,7 @@
   "scripts": {
     "start": "nodemon --exec babel-node ./src/server.js",
     "dev": "cat .env.development > .env && nodemon --exec babel-node ./src/server.js",
-    "test": "cat .env.test > .env && npx prisma migrate reset -f && jest --detectOpenHandles"
+    "test": "cat .env.test > .env && npx prisma migrate reset -f && jest --detectOpenHandles --runInBand --coverage"
   },
   "repository": {
     "type": "git",
@@ -25,7 +25,9 @@
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
-    "jsonwebtoken": "^8.5.1"
+    "jsonwebtoken": "^8.5.1",
+    "passport": "^0.5.0",
+    "passport-jwt": "^4.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.15.8",
@@ -36,6 +38,7 @@
     "eslint": "^8.1.0",
     "jest": "^27.3.1",
     "jest-mock-extended": "^2.0.4",
+    "node-fetch": "^2.0.0",
     "nodemon": "^2.0.14",
     "prettier": "^2.4.1",
     "prisma": "^3.3.0",

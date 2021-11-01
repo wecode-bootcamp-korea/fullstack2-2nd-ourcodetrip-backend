@@ -3,6 +3,7 @@
 
 generator client {
   provider = "prisma-client-js"
+
 }
 
 datasource db {
@@ -14,7 +15,7 @@ model User {
   id               Int                @id @default(autoincrement())
   name             String
   email            String             @unique
-  password         String
+  password         String?
   phoneNumber      String?            @unique @map("phone_number")
   platformId       Int                @map("platform_id")
   isLocationAgreed Boolean            @default(false) @map("is_location_agreed")
@@ -121,8 +122,8 @@ model SubCategory {
   id             Int          @id @default(autoincrement())
   name           String       @unique
   query          String       @unique
-  mainCategroyId Int          @map("main_category_id")
-  MainCategory   MainCategory @relation(fields: [mainCategroyId], references: [id])
+  mainCategoryId Int          @map("main_category_id")
+  MainCategory   MainCategory @relation(fields: [mainCategoryId], references: [id])
 
   Tour   Tour[]
   Ticket Ticket[]

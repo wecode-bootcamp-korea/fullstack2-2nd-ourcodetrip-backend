@@ -26,7 +26,18 @@ const serviceCategoryInfo = {
   checkColumnName: 'name',
 };
 
-const inputInfos = [platformInfo, userInfo, serviceCategoryInfo];
+const userProfileImageInfo = {
+  fileName: 'userProfileImage',
+  model: prisma.userProfileImage,
+  checkColumnName: 'imageUrl',
+};
+
+const inputInfos = [
+  platformInfo,
+  userInfo,
+  serviceCategoryInfo,
+  userProfileImageInfo,
+];
 
 export const uploadAllData = async () => {
   try {
