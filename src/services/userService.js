@@ -43,4 +43,4 @@ const generateJwt = async (userId) => {
   return token;
 };
 
-export { getUserById, authKakaoUser };
+export default { getUserById, authKakaoUser };

@@ -1,4 +1,5 @@
 import categoryService from './categoryService';
-import * as userService from './userService';
+import userService from './userService';
+import reviewService from './reviewService';
 
-export { categoryService, userService };
+export { categoryService, userService, reviewService };

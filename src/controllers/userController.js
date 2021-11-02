@@ -4,10 +4,9 @@ import fetch from 'node-fetch';
 
 const getUserById = async (req, res, next) => {
   try {
-    const { id } = req.params;
-    if (!id) throw new BadRequestError();
+    const { userId } = req.params;
 
-    const userInfo = await userService.getUserById(id);
+    const userInfo = await userService.getUserById(userId);
     res.status(200).json({ message: 'success', data: userInfo });
   } catch (err) {
     next(err);
@@ -40,4 +39,4 @@ const authKakaoUser = async (req, res, next) => {
   }
 };
 
-export { getUserById, authKakaoUser };
+export default { getUserById, authKakaoUser };

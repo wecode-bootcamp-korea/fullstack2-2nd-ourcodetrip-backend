@@ -1,4 +1,5 @@
 import categoryDao from './categoryDao';
-import * as userDao from './userDao';
+import userDao from './userDao';
+import reviewDao from './reviewDao';
 
-export { categoryDao, userDao };
+export { categoryDao, userDao, reviewDao };
