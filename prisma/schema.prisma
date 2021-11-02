@@ -58,7 +58,7 @@ model Partner {
   id        Int     @id @default(autoincrement())
   name      String  @unique
   introduce String?
-  userId    Int     @map("user_id")
+  userId    Int     @unique @map("user_id")
   User      User    @relation(fields: [userId], references: [id])
 
   Tour   Tour[]
@@ -207,7 +207,7 @@ model Tour {
   minimumHeadCount Int         @map("minimum_head_count")
   cityId           Int         @map("city_id")
   subCategoryId    Int         @map("sub_category_id")
-  productId        Int         @map("product_id")
+  productId        Int         @unique @map("product_id")
   partnerId        Int         @map("partner_id")
   City             City        @relation(fields: [cityId], references: [id])
   Product          Product     @relation(fields: [productId], references: [id])
@@ -223,7 +223,7 @@ model Ticket {
   expireDate    DateTime    @map("expire_date")
   cityId        Int         @map("city_id")
   subCategoryId Int         @map("sub_category_id")
-  productId     Int         @map("product_id")
+  productId     Int         @unique @map("product_id")
   partnerId     Int         @map("partner_id")
   City          City        @relation(fields: [cityId], references: [id])
   Product       Product     @relation(fields: [productId], references: [id])
@@ -286,7 +286,7 @@ model ReservationTour {
   id            Int         @id @default(autoincrement())
   tourDate      DateTime    @map("tour_date")
   headCount     Int         @map("head_count")
-  reservationId Int         @map("reservation_id")
+  reservationId Int         @unique @map("reservation_id")
   Reservation   Reservation @relation(fields: [reservationId], references: [id])
 
   @@map("reservation_tours")
@@ -306,7 +306,7 @@ model ReservationTicket {
 
 model Review {
   id            Int         @id @default(autoincrement())
-  reservationId Int         @map("reservation_id")
+  reservationId Int         @unique @map("reservation_id")
   rating        Int
   content       String      @db.VarChar(1000)
   createdAt     DateTime    @default(now()) @map("created_at")

@@ -74,4 +74,4 @@ const createKakaoUser = async (user) => {
   });
 };
 
-export { getUserById, getUserByEmail, createKakaoUser };
+export default { getUserById, getUserByEmail, createKakaoUser };
