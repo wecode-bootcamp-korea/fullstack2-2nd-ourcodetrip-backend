@@ -7,8 +7,8 @@ const getInitialReviewData = async (productId) => {
     throw new BadRequestError(`Bad Request, id '${productId}' is not a number`);
   }
   const allReviewData = await getAllReviewsByProductId(parsedProductId);
-  if (allReviewData.length === 0)
-    throw new NotFoundError(`productId ${productId} has no reivews`);
+  if (allReviewData.length === 0) return null;
+
   const data = getResReviewData(allReviewData);
   return data;
 };
@@ -22,8 +22,8 @@ const getAdditionalReview = async (productId, offset) => {
     );
   }
   const allReviewData = await getAllReviewsByProductId(parsedProductId);
-  if (allReviewData.length === 0)
-    throw new NotFoundError(`productId ${productId} has no reivews`);
+  if (allReviewData.length === 0) return null;
+
   const pagination = parsedOffset - 1;
   const data = {
     threads:

@@ -80,7 +80,7 @@ describe('/users', () => {
     const USER_ID = 1;
 
     await request(app)
-      .get(`/users/${USER_ID}`)
+      .get(`/users/profile/${USER_ID}`)
       .expect(
         hasData(200, (data) => {
           expect(data).toHaveProperty('name', '테스트');
@@ -94,7 +94,7 @@ describe('/users', () => {
     await prisma.userProfileImage.createMany({ data: userProfileImageData });
 
     await request(app)
-      .get('/users/')
+      .get('/users/profile/')
       .expect(302)
       .then((res) => hasError(404, 'Not found api path'));
   });
@@ -106,7 +106,7 @@ describe('/users', () => {
 
     const USER_EMAIL = 'test@test.com';
     await request(app)
-      .get(`/users/${USER_EMAIL}`)
+      .get(`/users/profile/${USER_EMAIL}`)
       .expect(400)
       .then((res) =>
         hasError(400, `Bad Request, id '${USER_EMAIL}' is not a number`)

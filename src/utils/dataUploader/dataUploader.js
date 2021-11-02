@@ -116,20 +116,7 @@ const ticketInfo = {
   checkColumnName: '',
 };
 
-const inputInfos = [
-  countryInfo,
-  cityInfo,
-  cityImageInfo,
-  productTypeInfo,
-  productInfo,
-  optionListInfo,
-  productOptionInfo,
-  imageTypeInfo,
-  productImageInfo,
-  partnerInfo,
-  tourInfo,
-  ticketInfo,
-];
+const inputInfos = [mainCategoryInfo, subCategoryInfo, ticketInfo];
 
 export const uploadAllData = async () => {
   try {

@@ -10,7 +10,7 @@ class UnauthorizedError extends Error {
   constructor(customMessage) {
     super();
     this.status = 401;
-    this.message = customMessage || 'Unauthorized access';
+    this.message = customMessage || 'Unauthorized user';
   }
 }
 

@@ -1,7 +1,7 @@
 import passport from 'passport';
-import { ExtractJwt } from 'passport-jwt';
+import { Strategy as JwtStrategy, ExtractJwt } from 'passport-jwt';
 import dotenv from 'dotenv';
-import { userService } from '../services';
+import { userService } from './services';
 
 dotenv.config();
 
@@ -12,20 +12,25 @@ export const jwtOptions = {
 
 export const verifyUser = async (payload, done) => {
   try {
-    console.log(`jwt payload: ${payload}`);
     const { id } = payload;
     const loginUser = await userService.getUserById(id);
+    if (!loginUser) return done(null, false);
     return done(null, loginUser);
   } catch (err) {
+    console.log(err);
     return done(err);
+  } finally {
   }
 };
+
+// passport.use('jwt', new JwtStrategy(jwtOptions, verifyUser));
 
 export const authenticateJWT = (req, res, next) => {
   passport.authenticate('jwt', { session: false }, (err, user) => {
     if (user) {
-      req.user = user;
+      const { id } = user;
+      req.userId = id;
     }
     next();
-  });
+  })(req, res, next);
 };

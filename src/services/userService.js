@@ -1,6 +1,7 @@
 import dotenv from 'dotenv';
 import jwt from 'jsonwebtoken';
 import { userDao } from '../models';
+import { productService } from '../services';
 import { BadRequestError, NotFoundError } from '../utils/errors';
 
 dotenv.config(); // config 디렉토리에 한번만 사용할 수 있도록 리팩토링
@@ -12,7 +13,7 @@ const getUserById = async (userId) => {
   }
 
   const userInfo = await userDao.getUserById(parsedUserId);
-  if (!userInfo) throw new NotFoundError();
+  if (!userInfo) throw new NotFoundError('Not found user');
 
   // 하단 코드 리팩토링 필요, 특정 객체의 프로퍼티를 새로운 키 값으로 옮겨주는 코드
   const { userProfileImage } = userInfo;
@@ -43,4 +44,54 @@ const generateJwt = async (userId) => {
   return token;
 };
 
-export default { getUserById, authKakaoUser };
+const isWishlistItem = async (userId, productId) => {
+  const items = await userDao.getWishlistByUserId(userId);
+  for (let item of items) {
+    if (item.productId === productId) {
+      return item;
+    }
+  }
+  return null;
+};
+
+const addAndRemoveWishlist = async (userId, productId) => {
+  const parsedProductId = parseInt(productId);
+  if (isNaN(parsedProductId))
+    throw new BadRequestError(
+      `Bad Request, productId '${productId}' is not a number`
+    );
+  if (!(await productService.getProductCardById(parsedProductId)))
+    throw new NotFoundError('Not found product');
+
+  const wishlistItem = await isWishlistItem(userId, parsedProductId);
+  let isWishlist;
+  if (wishlistItem) {
+    const { id: wishlistId } = wishlistItem;
+    await userDao.removeWishlist(wishlistId);
+    isWishlist = false;
+  } else {
+    await userDao.addWishlist(userId, parsedProductId);
+    isWishlist = true;
+  }
+  return isWishlist;
+};
+
+const getWishlistByUserId = async (userId) => {
+  const wishilistData = await userDao.getWishlistByUserId(userId);
+  const productList = [];
+  for (let data of wishilistData) {
+    const { productId } = data;
+    const product = await productService.getProductCardById(productId);
+    productList.push(product);
+  }
+  const sortedProductObj = productService.sortProductCardObjByCity(productList);
+  return sortedProductObj;
+};
+
+export default {
+  getUserById,
+  authKakaoUser,
+  isWishlistItem,
+  addAndRemoveWishlist,
+  getWishlistByUserId,
+};
