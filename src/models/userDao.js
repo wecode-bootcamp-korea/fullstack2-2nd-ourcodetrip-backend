@@ -6,6 +6,7 @@ const getUserById = async (userId) => {
       id: userId,
     },
     select: {
+      id: true,
       name: true,
       email: true,
       phoneNumber: true,
@@ -74,4 +75,40 @@ const createKakaoUser = async (user) => {
   });
 };
 
-export default { getUserById, getUserByEmail, createKakaoUser };
+const getWishlistByUserId = async (userId) => {
+  return await prisma.wishlist.findMany({
+    where: {
+      userId,
+    },
+    select: {
+      id: true,
+      productId: true,
+    },
+  });
+};
+
+const addWishlist = async (userId, productId) => {
+  await prisma.wishlist.create({
+    data: {
+      productId,
+      userId,
+    },
+  });
+};
+
+const removeWishlist = async (wishlistId) => {
+  await prisma.wishlist.delete({
+    where: {
+      id: wishlistId,
+    },
+  });
+};
+
+export default {
+  getUserById,
+  getUserByEmail,
+  createKakaoUser,
+  getWishlistByUserId,
+  addWishlist,
+  removeWishlist,
+};

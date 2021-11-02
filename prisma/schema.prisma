@@ -220,6 +220,7 @@ model Tour {
 model Ticket {
   id            Int         @id @default(autoincrement())
   standardPrice Float?      @map("standard_price")
+  discountRate  Float?      @map("discount_rate")
   expireDate    DateTime    @map("expire_date")
   cityId        Int         @map("city_id")
   subCategoryId Int         @map("sub_category_id")
