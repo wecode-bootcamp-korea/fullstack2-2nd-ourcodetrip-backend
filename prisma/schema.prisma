@@ -98,8 +98,9 @@ model CityImage {
 }
 
 model ServiceCategory {
-  id   Int    @id @default(autoincrement())
-  name String @unique
+  id    Int    @id @default(autoincrement())
+  name  String @unique
+  query String @unique
 
   MainCategory MainCategory[]
   @@map("service_categories")
@@ -108,6 +109,7 @@ model ServiceCategory {
 model MainCategory {
   id                Int             @id @default(autoincrement())
   name              String          @unique
+  query             String          @unique
   serviceCategoryId Int             @map("service_category_id")
   ServiceCategory   ServiceCategory @relation(fields: [serviceCategoryId], references: [id])
 
@@ -118,6 +120,7 @@ model MainCategory {
 model SubCategory {
   id             Int          @id @default(autoincrement())
   name           String       @unique
+  query          String       @unique
   mainCategroyId Int          @map("main_category_id")
   MainCategory   MainCategory @relation(fields: [mainCategroyId], references: [id])
 
