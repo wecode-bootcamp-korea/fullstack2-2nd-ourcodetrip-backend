@@ -125,7 +125,7 @@ const getWishlistByUserId = async (userId) => {
   const productList = [];
   for (let data of wishilistData) {
     const { productId } = data;
-    const product = await productService.getProductCardById(productId);
+    const product = await productService.getProductCardById(productId, userId);
     productList.push(product);
   }
   const sortedProductObj = productService.sortProductCardObjByCity(productList);

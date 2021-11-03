@@ -331,20 +331,19 @@ model ReviewImage {
 }
 
 model Classification {
-  id    Int    @id @default(autoincrement())
-  name  String @unique
-  query String @unique
+  id   Int    @id @default(autoincrement())
+  name String @unique
 
   ClassificationProduct ClassificationProduct[]
   @@map("classifications")
 }
 
 model ClassificationProduct {
-  id              Int            @id @default(autoincrement())
-  classficationId Int            @map("classification_id")
-  productId       Int            @map("product_id")
-  Classification  Classification @relation(fields: [classficationId], references: [id])
-  Product         Product        @relation(fields: [productId], references: [id])
+  id               Int            @id @default(autoincrement())
+  classificationId Int            @map("classification_id")
+  productId        Int            @map("product_id")
+  Classification   Classification @relation(fields: [classificationId], references: [id])
+  Product          Product        @relation(fields: [productId], references: [id])
 
   @@map("classification_products")
 }

@@ -40,14 +40,14 @@ const getAllReviewsByProductId = async (productId) => {
   );
   const allReviewData = [];
   for (let reservation of reservationsData) {
-    const review = await reviewDao.getReivewByReservationId(reservation.id);
+    const review = await reviewDao.getReviewByReservationId(reservation.id);
     const { ReviewImage } = review;
-    const changedUrls =
+    const changedUrl =
       ReviewImage.length !== 0
-        ? ReviewImage.map((el) => (el = el.imageUrl))
+        ? ReviewImage.map((el) => (el = el.imageUrl))[0]
         : null;
     delete review.ReviewImage;
-    review['reviewImageUrls'] = changedUrls;
+    review['reviewImageUrl'] = changedUrl;
     allReviewData.push(review);
   }
 
@@ -60,15 +60,24 @@ const getResReviewData = (allReviewData) => {
   let totalReviewImages = 0;
   let reviewImages = [];
   for (let review of allReviewData) {
-    const { id, rating, reviewImageUrls } = review;
+    const {
+      id,
+      rating,
+      reviewImageUrl,
+      Reservation: {
+        User: { name: userName },
+      },
+    } = review;
+    review['userName'] = userName;
+    delete review.Reservation;
     if (rating === 5) totalReviewsForEachRating[0]++;
     if (rating === 4) totalReviewsForEachRating[1]++;
     if (rating === 3) totalReviewsForEachRating[2]++;
     if (rating === 2) totalReviewsForEachRating[3]++;
     if (rating === 1) totalReviewsForEachRating[4]++;
-    if (reviewImageUrls !== null) {
-      totalReviewImages += reviewImageUrls.length;
-      reviewImages = reviewImages.concat({ id, reviewImageUrls });
+    if (reviewImageUrl !== null) {
+      totalReviewImages++;
+      reviewImages = reviewImages.concat({ id, reviewImageUrl });
     }
   }
   const [ratingFive, ratingFour, ratingThree, ratingTwo, ratingOne] =

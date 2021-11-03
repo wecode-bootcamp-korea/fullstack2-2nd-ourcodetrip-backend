@@ -11,7 +11,7 @@ const getReservationsByProductId = async (productId) => {
   });
 };
 
-const getReivewByReservationId = async (reservationId) => {
+const getReviewByReservationId = async (reservationId) => {
   const reviewData = await prisma.review.findUnique({
     where: {
       reservationId,
@@ -39,11 +39,20 @@ const getReivewByReservationId = async (reservationId) => {
           imageUrl: true,
         },
       },
+      Reservation: {
+        select: {
+          User: {
+            select: {
+              name: true,
+            },
+          },
+        },
+      },
     },
   });
 };
 
 export default {
   getReservationsByProductId,
-  getReivewByReservationId,
+  getReviewByReservationId,
 };
