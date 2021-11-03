@@ -1,7 +1,7 @@
 export const queryStringFormat = {
   /*
     city: city=city_name
-    category: category_query, cateogry=main or category=main:sub (need parsing)
+    category: category_query, category=main or category=main:sub (need parsing)
     sortBy: condition, sort=price:asc sort=rating:desc (need parsing)
     availableDate: minRangeValue-maxRangeValue (need parsing)
     price: minRangeValue-maxRangeValue (need parsing)

@@ -20,16 +20,16 @@ const userInfo = {
   checkColumnName: 'email',
 };
 
-const serviceCategoryInfo = {
-  fileName: 'serviceCategory',
-  model: prisma.serviceCategory,
-  checkColumnName: 'name',
-};
-
 const userProfileImageInfo = {
   fileName: 'userProfileImage',
   model: prisma.userProfileImage,
   checkColumnName: 'imageUrl',
+};
+
+const serviceCategoryInfo = {
+  fileName: 'serviceCategory',
+  model: prisma.serviceCategory,
+  checkColumnName: 'name',
 };
 
 const mainCategoryInfo = {
@@ -113,6 +113,12 @@ const tourInfo = {
 const ticketInfo = {
   fileName: 'ticket',
   model: prisma.ticket,
+  checkColumnName: '',
+};
+
+const TicketOptionInfo = {
+  fileName: 'ticketOption',
+  model: prisma.ticketOption,
   checkColumnName: '',
 };
 

@@ -1,7 +1,6 @@
-import { BadRequestError, UnauthorizedError } from '../utils/errors';
 import { userService } from '../services';
+import { UnauthorizedError } from '../utils/errors';
 import fetch from 'node-fetch';
-import { response } from 'express';
 
 const getUserProfileById = async (req, res, next) => {
   try {

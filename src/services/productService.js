@@ -1,8 +1,7 @@
-import { prisma } from '.prisma/client';
 import { reviewService, userService } from '.';
-import productDao from '../models/productDao';
-import { BadRequestError, NotFoundError } from '../utils/errors';
+import { productDao } from '../models';
 import { parseAndFormat, queryStringFormat } from '../utils/queryStringMapper';
+import { BadRequestError, NotFoundError } from '../utils/errors';
 
 const getProductCardById = async (productId, userId) => {
   const parsedProductId = parseInt(productId);
@@ -340,10 +339,47 @@ const getReviewWishData = async (productId, userId) => {
   return { totalReviews, rating, onUsersWishList };
 };
 
+const getProductDetailInfoByProductId = async (productId) => {
+  const convertedProductId = +productId;
+  if (Number.isNaN(convertedProductId)) {
+    throw new BadRequestError(`Bad Request, id '${productId}' is not a number`);
+  }
+
+  const productTypeData = await productDao.getProductTypeById(
+    convertedProductId
+  );
+  if (!productTypeData) throw new NotFoundError('Not found product');
+
+  const productTypeName = await productDao.getProductTypeNameById(
+    productTypeData.productTypeId
+  );
+
+  let productDetailData = {};
+  if (productTypeName === '투어') {
+    productDetailData = await productDao.getTourDetailInfoByProductId(
+      convertedProductId
+    );
+    const { price: standardPrice } = productDetailData;
+    productDetailData['standardPrice'] = standardPrice;
+    delete productDetailData.price;
+  } else {
+    productDetailData = await productDao.getTicketDetailInfoByProductId(
+      convertedProductId
+    );
+    const { expireDate, TicketOption } = productDetailData;
+    for (let option of TicketOption) {
+      option['expireDate'] = expireDate;
+    }
+    productDetailData['TicketOption'] = TicketOption;
+  }
+  return productDetailData;
+};
+
 export default {
   getProductCardById,
   sortProductCardObjByCity,
   getProductsByClassId,
   getProductsByQuery,
   getWishCountByProductId,
+  getProductDetailInfoByProductId,
 };
