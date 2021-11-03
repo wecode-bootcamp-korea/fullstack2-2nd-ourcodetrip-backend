@@ -140,12 +140,13 @@ model Product {
   deletedAt     DateTime?   @map("deleted_at")
   ProductType   ProductType @relation(fields: [productTypeId], references: [id])
 
-  ProductOption ProductOption[]
-  Tour          Tour[]
-  Ticket        Ticket[]
-  ProductImage  ProductImage[]
-  Wishlist      Wishlist[]
-  Reservation   Reservation[]
+  ProductOption         ProductOption[]
+  Tour                  Tour[]
+  Ticket                Ticket[]
+  ProductImage          ProductImage[]
+  Wishlist              Wishlist[]
+  Reservation           Reservation[]
+  ClassificationProduct ClassificationProduct[]
   @@map("products")
 }
 
@@ -327,4 +328,23 @@ model ReviewImage {
   Review   Review @relation(fields: [reviewId], references: [id])
 
   @@map("review_images")
+}
+
+model Classification {
+  id    Int    @id @default(autoincrement())
+  name  String @unique
+  query String @unique
+
+  ClassificationProduct ClassificationProduct[]
+  @@map("classifications")
+}
+
+model ClassificationProduct {
+  id              Int            @id @default(autoincrement())
+  classficationId Int            @map("classification_id")
+  productId       Int            @map("product_id")
+  Classification  Classification @relation(fields: [classficationId], references: [id])
+  Product         Product        @relation(fields: [productId], references: [id])
+
+  @@map("classification_products")
 }
