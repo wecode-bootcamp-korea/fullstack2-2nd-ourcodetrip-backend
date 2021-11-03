@@ -116,7 +116,19 @@ const ticketInfo = {
   checkColumnName: '',
 };
 
-const inputInfos = [mainCategoryInfo, subCategoryInfo, ticketInfo];
+const classificationInfo = {
+  fileName: 'classification',
+  model: prisma.classification,
+  checkColumnName: 'name',
+};
+
+const classificationProduct = {
+  fileName: 'classificationProduct',
+  model: prisma.classificationProduct,
+  checkColumnName: '',
+};
+
+const inputInfos = [];
 
 export const uploadAllData = async () => {
   try {
