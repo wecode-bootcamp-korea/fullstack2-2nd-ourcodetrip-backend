@@ -2,37 +2,51 @@ import dotenv from 'dotenv';
 import jwt from 'jsonwebtoken';
 import { userDao } from '../models';
 import { productService } from '../services';
-import { BadRequestError, NotFoundError } from '../utils/errors';
+import {
+  BadRequestError,
+  NotFoundError,
+  UnauthorizedError,
+} from '../utils/errors';
 
 dotenv.config(); // config 디렉토리에 한번만 사용할 수 있도록 리팩토링
 
-const getUserById = async (userId) => {
+const getUserProfileById = async (userId) => {
   const parsedUserId = parseInt(userId);
   if (isNaN(parsedUserId)) {
     throw new BadRequestError(`Bad Request, id '${userId}' is not a number`);
   }
 
-  const userInfo = await userDao.getUserById(parsedUserId);
-  if (!userInfo) throw new NotFoundError('Not found user');
+  const userProfile = await userDao.getUserProfileById(parsedUserId);
+  if (!userProfile) throw new NotFoundError('Not found user');
 
   // 하단 코드 리팩토링 필요, 특정 객체의 프로퍼티를 새로운 키 값으로 옮겨주는 코드
-  const { userProfileImage } = userInfo;
+  const { userProfileImage } = userProfile;
   const profileImageUrl = userProfileImage[0].imageUrl;
-  delete userInfo.userProfileImage;
-  userInfo['profileImageUrl'] = profileImageUrl;
+  delete userProfile.userProfileImage;
+  userProfile['profileImageUrl'] = profileImageUrl;
 
-  return userInfo;
+  return userProfile;
+};
+
+const updateUserProfile = async (userId, updateData) => {
+  const parsedUserId = parseInt(userId);
+  if (isNaN(parsedUserId)) {
+    throw new BadRequestError(`Bad Request, id '${userId}' is not a number`);
+  }
+
+  const userProfile = await userDao.updateUserProfile(userId, updateData);
+  return userProfile;
 };
 
 const authKakaoUser = async (user) => {
   const { email } = user;
-  const userInfo = await userDao.getUserByEmail(email);
+  const userProfile = await userDao.getUserProfileByEmail(email);
   let userId;
-  if (!userInfo) {
+  if (!userProfile) {
     const { id } = await userDao.createKakaoUser(user);
     userId = id;
   } else {
-    userId = userInfo.id;
+    userId = userProfile.id;
   }
   const token = await generateJwt(userId);
   return token;
@@ -42,6 +56,36 @@ const generateJwt = async (userId) => {
   const secretOrKey = process.env.JWT_SECRET;
   let token = jwt.sign({ id: userId }, secretOrKey, { expiresIn: '2h' });
   return token;
+};
+
+const checkKakaoLinkUser = async (email) => {
+  const userProfile = await userDao.getUserProfileByEmail(email);
+  if (!userProfile) throw new NotFoundError('Not found user');
+
+  const kakaoPlatformId = await userDao.getPlatformIdByName('kakao');
+  if (userProfile.platformId !== kakaoPlatformId) {
+    throw new UnauthorizedError({
+      message: `Unauthorized Access, ${email} user is not linked with kakao`,
+      kakaoLinked: false,
+    });
+  }
+  return { kakaoLinked: true };
+};
+
+const setKakaoLink = async (email) => {
+  const userProfile = await userDao.getUserProfileByEmail(email);
+  if (!userProfile) throw new NotFoundError('Not found user');
+
+  const kakaoPlatformId = await userDao.getPlatformIdByName('kakao');
+  return await userDao.setKakaoLink(email, kakaoPlatformId);
+};
+
+const unsetKakaoLink = async (email) => {
+  const userProfile = await userDao.getUserProfileByEmail(email);
+  if (!userProfile) throw new NotFoundError('Not found user');
+
+  const localPlatformId = await userDao.getPlatformIdByName('local');
+  return await userDao.unsetKakaoLink(email, localPlatformId);
 };
 
 const isWishlistItem = async (userId, productId) => {
@@ -89,8 +133,12 @@ const getWishlistByUserId = async (userId) => {
 };
 
 export default {
-  getUserById,
+  getUserProfileById,
+  updateUserProfile,
   authKakaoUser,
+  checkKakaoLinkUser,
+  setKakaoLink,
+  unsetKakaoLink,
   isWishlistItem,
   addAndRemoveWishlist,
   getWishlistByUserId,

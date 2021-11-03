@@ -1,6 +1,6 @@
 import prisma from '../../prisma';
 
-const getUserById = async (userId) => {
+const getUserProfileById = async (userId) => {
   return await prisma.user.findUnique({
     where: {
       id: userId,
@@ -23,7 +23,7 @@ const getUserById = async (userId) => {
   });
 };
 
-const getUserByEmail = async (email) => {
+const getUserProfileByEmail = async (email) => {
   return await prisma.user.findUnique({
     where: {
       email,
@@ -42,6 +42,20 @@ const getUserByEmail = async (email) => {
           imageUrl: true,
         },
       },
+    },
+  });
+};
+
+const updateUserProfile = async (userId, updateData) => {
+  const { name, isEmailAgreed, isSmsAgreed } = updateData;
+  return await prisma.user.update({
+    where: {
+      id: userId,
+    },
+    data: {
+      name,
+      isEmailAgreed,
+      isSmsAgreed,
     },
   });
 };
@@ -75,6 +89,28 @@ const createKakaoUser = async (user) => {
   });
 };
 
+const setKakaoLink = async (email, kakaoPlatformId) => {
+  return await prisma.user.update({
+    where: {
+      email,
+    },
+    data: {
+      platformId: kakaoPlatformId,
+    },
+  });
+};
+
+const unsetKakaoLink = async (email, localPlatformId) => {
+  return await prisma.user.update({
+    where: {
+      email,
+    },
+    data: {
+      platformId: localPlatformId,
+    },
+  });
+};
+
 const getWishlistByUserId = async (userId) => {
   return await prisma.wishlist.findMany({
     where: {
@@ -104,11 +140,26 @@ const removeWishlist = async (wishlistId) => {
   });
 };
 
+const getPlatformIdByName = async (platformName) => {
+  await prisma.platform.findUnique({
+    where: {
+      name: platformName,
+    },
+    select: {
+      platformId: true,
+    },
+  });
+};
+
 export default {
-  getUserById,
-  getUserByEmail,
+  getUserProfileById,
+  getUserProfileByEmail,
+  updateUserProfile,
   createKakaoUser,
+  setKakaoLink,
+  unsetKakaoLink,
   getWishlistByUserId,
   addWishlist,
   removeWishlist,
+  getPlatformIdByName,
 };
