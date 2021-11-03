@@ -1,7 +1,7 @@
 import passport from 'passport';
+import { userService } from '../services';
 import { ExtractJwt } from 'passport-jwt';
 import dotenv from 'dotenv';
-import { userService } from '../services';
 
 dotenv.config();
 

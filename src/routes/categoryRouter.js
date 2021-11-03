@@ -1,11 +1,11 @@
 import express from 'express';
 import { categoryController } from '../controllers';
 
-const router = express.Router();
+const categoryRouter = express.Router();
 
-router.get('/service', categoryController.getServiceCategories);
-router.get('/main', categoryController.getMainCategories);
-router.get('/main&sub', categoryController.getMainAndSubCategories);
-router.get('/city', categoryController.getCityCategories);
+categoryRouter.get('/service', categoryController.getServiceCategories);
+categoryRouter.get('/main', categoryController.getMainCategories);
+categoryRouter.get('/main&sub', categoryController.getMainAndSubCategories);
+categoryRouter.get('/city', categoryController.getCityCategories);
 
-export default router;
+export default categoryRouter;

@@ -1,4 +1,3 @@
-import { Prisma } from '.prisma/client';
 import prisma from '../../prisma';
 
 const getProductTypeById = async (productId) => {
@@ -358,6 +357,147 @@ const getWishCountByProductId = async (productId) => {
   });
 };
 
+const getTourDetailInfoByProductId = async (productId) => {
+  const imageTypeId = await getImageTypeIdByName('detail');
+
+  const tour = prisma.tour.findUnique({
+    where: {
+      productId,
+    },
+    select: {
+      productId: true,
+      price: true,
+      discountRate: true,
+      startDate: true,
+      endDate: true,
+      maximumHeadCount: true,
+      minimumHeadCount: true,
+      Product: {
+        select: {
+          name: true,
+          ProductType: {
+            select: {
+              name: true,
+            },
+          },
+          ProductImage: {
+            where: {
+              imageTypeId,
+            },
+            select: {
+              imageUrl: true,
+            },
+          },
+          ProductOption: {
+            select: {
+              OptionList: {
+                select: {
+                  name: true,
+                },
+              },
+            },
+          },
+          _count: {
+            select: {
+              Wishlist: true,
+            },
+          },
+        },
+      },
+      City: {
+        select: {
+          name: true,
+          Country: {
+            select: {
+              name: true,
+            },
+          },
+        },
+      },
+      Partner: {
+        select: {
+          name: true,
+          introduce: true,
+        },
+      },
+    },
+  });
+  return tour;
+};
+
+const getTicketDetailInfoByProductId = async (productId) => {
+  const imageTypeId = await getImageTypeIdByName('detail');
+
+  const ticket = await prisma.ticket.findUnique({
+    where: {
+      productId,
+    },
+    select: {
+      productId: true,
+      standardPrice: true,
+      discountRate: true,
+      expireDate: true,
+      TicketOption: {
+        select: {
+          id: true,
+          name: true,
+          price: true,
+          discountRate: true,
+        },
+      },
+      Product: {
+        select: {
+          name: true,
+          ProductType: {
+            select: {
+              name: true,
+            },
+          },
+          ProductImage: {
+            where: {
+              imageTypeId,
+            },
+            select: {
+              imageUrl: true,
+            },
+          },
+          ProductOption: {
+            select: {
+              OptionList: {
+                select: {
+                  name: true,
+                },
+              },
+            },
+          },
+          _count: {
+            select: {
+              Wishlist: true,
+            },
+          },
+        },
+      },
+      City: {
+        select: {
+          name: true,
+          Country: {
+            select: {
+              name: true,
+            },
+          },
+        },
+      },
+      Partner: {
+        select: {
+          name: true,
+          introduce: true,
+        },
+      },
+    },
+  });
+  return ticket;
+};
+
 export default {
   getProductTypeById,
   getProductTypeNameById,
@@ -370,4 +510,6 @@ export default {
   getSubCategoryIdByQuery,
   getProductsByOptionName,
   getWishCountByProductId,
+  getTourDetailInfoByProductId,
+  getTicketDetailInfoByProductId,
 };

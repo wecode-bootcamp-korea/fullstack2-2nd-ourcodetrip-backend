@@ -1,16 +1,15 @@
 import express from 'express';
 import router from './routes';
+import cors from 'cors';
+import passport from 'passport';
+import { Strategy as JwtStrategy } from 'passport-jwt';
+import { jwtOptions, verifyUser } from './middlewares/passportJwt';
+import { uploadAllData } from './utils/dataUploader/dataUploader';
 import {
   invalidPathHandler,
   errorLogger,
   errorResponder,
 } from './middlewares/errorHandler';
-import cors from 'cors';
-import passport from 'passport';
-
-import { uploadAllData } from './utils/dataUploader/dataUploader';
-import { Strategy as JwtStrategy } from 'passport-jwt';
-import { jwtOptions, verifyUser } from './middlewares/passportJwt';
 
 const app = express();
 

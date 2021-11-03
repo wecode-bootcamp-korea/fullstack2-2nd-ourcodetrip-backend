@@ -31,7 +31,22 @@ const getProductsByClassId = async (req, res, next) => {
   }
 };
 
+const getProductDetailInfoByProductId = async (req, res, next) => {
+  try {
+    const { productId } = req.params;
+    const productDetailData =
+      await productService.getProductDetailInfoByProductId(productId);
+    res.status(200).json({
+      message: 'SUCCESS',
+      data: productDetailData,
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
 export default {
   getProductList,
   getProductsByClassId,
+  getProductDetailInfoByProductId,
 };

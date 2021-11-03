@@ -1,5 +1,5 @@
-import { BadRequestError, NotFoundError } from '../utils/errors';
 import { reviewDao } from '../models';
+import { BadRequestError } from '../utils/errors';
 
 const getInitialReviewData = async (productId) => {
   const parsedProductId = parseInt(productId);
