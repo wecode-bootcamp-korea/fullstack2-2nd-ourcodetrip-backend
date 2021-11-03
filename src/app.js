@@ -11,7 +11,7 @@ import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 import { uploadAllData } from './utils/dataUploader/dataUploader';
 import { Strategy as JwtStrategy } from 'passport-jwt';
-import { jwtOptions, verifyUser } from './passport';
+import { jwtOptions, verifyUser } from './middlewares/passportJwt';
 
 const app = express();
 
