@@ -116,7 +116,7 @@ const ticketInfo = {
   checkColumnName: '',
 };
 
-const TicketOptionInfo = {
+const ticketOptionInfo = {
   fileName: 'ticketOption',
   model: prisma.ticketOption,
   checkColumnName: '',
@@ -128,14 +128,80 @@ const classificationInfo = {
   checkColumnName: 'name',
 };
 
-const classificationProduct = {
+const classificationProductInfo = {
   fileName: 'classificationProduct',
   model: prisma.classificationProduct,
   checkColumnName: '',
 };
 
+const wishlistInfo = {
+  fileName: 'wishlist',
+  model: prisma.wishlist,
+  checkColumnName: '',
+};
+
+const paymentTypeInfo = {
+  fileName: 'paymentType',
+  model: prisma.paymentType,
+  checkColumnName: 'name',
+};
+
+const reservationInfo = {
+  fileName: 'reservation',
+  model: prisma.reservation,
+  checkColumnName: '',
+};
+
+const reservationTourInfo = {
+  fileName: 'reservationTour',
+  model: prisma.reservationTour,
+  checkColumnName: '',
+};
+
+const reservationTicketInfo = {
+  fileName: 'reservationTicket',
+  model: prisma.reservationTicket,
+  checkColumnName: '',
+};
+
+const reviewInfo = {
+  fileName: 'review',
+  model: prisma.review,
+  checkColumnName: '',
+};
+
+const reviewImageInfo = {
+  fileName: 'reviewImage',
+  model: prisma.reviewImage,
+  checkColumnName: '',
+};
+
 const inputInfos = [];
 
+/*
+  캐러셀 테스트 데이터 세트
+  classificationInfo,
+  optionListInfo,
+  imageTypeInfo,
+  platformInfo,
+  serviceCategoryInfo,
+  mainCategoryInfo,
+  subCategoryInfo,
+  countryInfo,
+  cityInfo,
+  productTypeInfo,
+  userInfo,
+  partnerInfo,
+  productInfo,
+  productImageInfo,
+  productOptionInfo,
+  classificationProductInfo,
+  tourInfo,
+  paymentTypeInfo,
+  reservationInfo,
+  reviewInfo,
+  reviewImageInfo,
+*/
 export const uploadAllData = async () => {
   try {
     for (let info of inputInfos) {

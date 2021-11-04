@@ -87,13 +87,15 @@ model City {
 }
 
 model CityImage {
-  id        Int       @id @default(autoincrement())
-  imageUrl  String    @map("image_url") @db.VarChar(2000)
-  cityId    Int       @map("city_id")
-  createdAt DateTime  @default(now()) @map("created_at")
-  isDeleted Boolean   @default(false) @map("is_deleted")
-  deletedAt DateTime? @map("deleted_at")
-  City      City      @relation(fields: [cityId], references: [id])
+  id          Int       @id @default(autoincrement())
+  imageUrl    String    @map("image_url") @db.VarChar(2000)
+  imageTypeId Int       @map("image_type_id")
+  cityId      Int       @map("city_id")
+  createdAt   DateTime  @default(now()) @map("created_at")
+  isDeleted   Boolean   @default(false) @map("is_deleted")
+  deletedAt   DateTime? @map("deleted_at")
+  City        City      @relation(fields: [cityId], references: [id])
+  ImageType   ImageType @relation(fields: [imageTypeId], references: [id])
 
   @@map("city_images")
 }
@@ -196,6 +198,7 @@ model ImageType {
 
   ProductImage ProductImage[]
   @@map("image_types")
+  CityImage CityImage[]
 }
 
 model Tour {

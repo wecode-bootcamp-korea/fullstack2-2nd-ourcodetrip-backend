@@ -20,6 +20,12 @@ const getUserProfileById = async (userId) => {
   if (!userProfile) throw new NotFoundError('Not found user');
 
   // 하단 코드 리팩토링 필요, 특정 객체의 프로퍼티를 새로운 키 값으로 옮겨주는 코드
+  const {
+    Platform: { name },
+  } = userProfile;
+  userProfile['platform'] = name;
+  delete userProfile.Platform;
+
   const { userProfileImage } = userProfile;
   const profileImageUrl = userProfileImage[0].imageUrl;
   delete userProfile.userProfileImage;
