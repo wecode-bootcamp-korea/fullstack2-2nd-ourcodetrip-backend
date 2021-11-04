@@ -36,11 +36,11 @@ export const readFile = async (fileName) => {
             if (key.startsWith('is')) {
               data[key] = JSON.parse(data[key]);
             }
-            if (key.endsWith('Date')) {
+            if (key.endsWith('Date') || key.endsWith('At')) {
               data[key] = new Date(data[key]);
             }
           }
-          console.log(data);
+          // console.log(data);
         }
         resolve(results);
       });

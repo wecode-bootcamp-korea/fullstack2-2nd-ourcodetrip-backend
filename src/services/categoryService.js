@@ -25,10 +25,18 @@ const getMainAndSubCategories = async () => {
 const getCityCategories = async () => {
   const cityCategories = await categoryDao.getCityCategories();
   if (!cityCategories) throw new NotFoundError();
-  
-  
+  for (let city of cityCategories) {
+    const { CityImage } = city;
+    if (CityImage) {
+      const filteredImages = CityImage.map(
+        (el) => (el.ImageType = el.ImageType.name)
+      );
+      delete cityCategories.CityImage;
+      cityCategories['CityImage'] = filteredImages;
+    }
+  }
+
   return cityCategories;
-  
 };
 
 export default {

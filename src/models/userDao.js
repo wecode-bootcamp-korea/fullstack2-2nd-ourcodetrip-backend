@@ -10,7 +10,11 @@ const getUserProfileById = async (userId) => {
       name: true,
       email: true,
       phoneNumber: true,
-      platformId: true,
+      Platform: {
+        select: {
+          name: true,
+        },
+      },
       isEmailAgreed: true,
       isSmsAgreed: true,
       updatedAt: true,
@@ -47,7 +51,11 @@ const getUserProfileByEmail = async (email) => {
 };
 
 const updateUserProfile = async (userId, updateData) => {
-  const { name, isEmailAgreed, isSmsAgreed } = updateData;
+  const {
+    inputName: name,
+    checkedEmail: isEmailAgreed,
+    checkedSms: isSmsAgreed,
+  } = updateData;
   return await prisma.user.update({
     where: {
       id: userId,
@@ -141,7 +149,7 @@ const removeWishlist = async (wishlistId) => {
 };
 
 const getPlatformIdByName = async (platformName) => {
-  await prisma.platform.findUnique({
+  const { id } = await prisma.platform.findUnique({
     where: {
       name: platformName,
     },
@@ -149,6 +157,7 @@ const getPlatformIdByName = async (platformName) => {
       platformId: true,
     },
   });
+  return id;
 };
 
 export default {

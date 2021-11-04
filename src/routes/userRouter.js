@@ -12,7 +12,8 @@ userRouter.patch(
 );
 userRouter.post('/auth/kakao', userController.authKakaoUser);
 userRouter.get('/auth/kakao', userController.checkKakaoLinkUser);
-userRouter.patch('/auth/kakao', userController.handleKakaoLink);
+userRouter.post('/auth/kakao/link', userController.handleKakaoLink);
+// patch로 진행할 시에 json-parser에서 unexpected token 0 ~ 에러 발생
 
 userRouter.post(
   '/wishlist/:productId',

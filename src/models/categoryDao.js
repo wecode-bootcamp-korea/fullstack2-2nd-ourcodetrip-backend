@@ -49,6 +49,11 @@ const getCityCategories = async () => {
       CityImage: {
         select: {
           imageUrl: true,
+          ImageType: {
+            select: {
+              name: true,
+            },
+          },
         },
       },
     },
