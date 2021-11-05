@@ -154,7 +154,7 @@ const getPlatformIdByName = async (platformName) => {
       name: platformName,
     },
     select: {
-      platformId: true,
+      id: true,
     },
   });
   return id;
