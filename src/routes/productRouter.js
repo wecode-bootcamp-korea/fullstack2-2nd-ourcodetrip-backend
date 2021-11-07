@@ -4,8 +4,15 @@ import { authenticateJWT } from '../middlewares/passportJwt';
 
 const productRouter = express.Router();
 
-productRouter.get('/:productId', productController.getProductDetailInfoByProductId);
-productRouter.get('/offers', authenticateJWT, productController.getProductList);
+productRouter.get(
+  '/:productId',
+  productController.getProductDetailInfoByProductId
+);
+productRouter.get(
+  '/filter/offers',
+  authenticateJWT,
+  productController.getProductList
+);
 productRouter.get(
   '/classification/:id',
   authenticateJWT,
