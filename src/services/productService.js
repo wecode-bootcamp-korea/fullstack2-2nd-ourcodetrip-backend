@@ -341,9 +341,9 @@ const getReviewWishData = async (productId, userId) => {
 
 const getProductDetailInfoByProductId = async (productId) => {
   const convertedProductId = +productId;
-  if (Number.isNaN(convertedProductId)) {
-    throw new BadRequestError(`Bad Request, id '${productId}' is not a number`);
-  }
+  // if (Number.isNaN(convertedProductId)) {
+  //   throw new BadRequestError(`Bad Request, id '${productId}' is not a number`);
+  // }
 
   const productTypeData = await productDao.getProductTypeById(
     convertedProductId

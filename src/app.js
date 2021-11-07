@@ -13,7 +13,12 @@ import {
 
 const app = express();
 
-app.use(cors());
+const corsOptions = {
+  origin: 'http://localhost:3000',
+  credentials: true,
+};
+
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(passport.initialize());
 passport.use(new JwtStrategy(jwtOptions, verifyUser));
