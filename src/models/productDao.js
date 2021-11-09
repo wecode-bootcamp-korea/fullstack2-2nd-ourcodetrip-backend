@@ -128,7 +128,6 @@ const getTicketCardByProductId = async (productId) => {
 const getTourCardsByQuery = async (query) => {
   const imageTypeId = await getImageTypeIdByName('thumbnail');
   const { city, category } = query;
-  console.log(city);
   let main, filterdIdArr;
   if (category) {
     main = category.main;
@@ -156,7 +155,7 @@ const getTourCardsByQuery = async (query) => {
 
   const dataObj = await prisma.city.findUnique({
     where: {
-      name: city,
+      englishName: city,
     },
     select: {
       id: true,
@@ -245,7 +244,7 @@ const getTicketCardsByQuery = async (query) => {
 
   const { id: cityId } = await prisma.city.findUnique({
     where: {
-      name: city,
+      enghlishName: city,
     },
     select: {
       id: true,

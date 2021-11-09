@@ -176,7 +176,29 @@ const reviewImageInfo = {
   checkColumnName: '',
 };
 
-const inputInfos = [];
+const inputInfos = [
+  classificationInfo,
+  optionListInfo,
+  imageTypeInfo,
+  platformInfo,
+  serviceCategoryInfo,
+  mainCategoryInfo,
+  subCategoryInfo,
+  countryInfo,
+  cityInfo,
+  productTypeInfo,
+  userInfo,
+  partnerInfo,
+  productInfo,
+  productImageInfo,
+  productOptionInfo,
+  classificationProductInfo,
+  tourInfo,
+  paymentTypeInfo,
+  reservationInfo,
+  reviewInfo,
+  reviewImageInfo,
+];
 
 /*
   캐러셀 테스트 데이터 세트
