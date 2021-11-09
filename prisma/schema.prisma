@@ -75,10 +75,11 @@ model Country {
 }
 
 model City {
-  id        Int     @id @default(autoincrement())
-  name      String  @unique
-  countryId Int     @map("country_id")
-  Country   Country @relation(fields: [countryId], references: [id])
+  id          Int     @id @default(autoincrement())
+  name        String  @unique
+  englishName String  @unique @map("english_name")
+  countryId   Int     @map("country_id")
+  Country     Country @relation(fields: [countryId], references: [id])
 
   CityImage CityImage[]
   Tour      Tour[]
@@ -197,8 +198,8 @@ model ImageType {
   name String @unique
 
   ProductImage ProductImage[]
+  CityImage    CityImage[]
   @@map("image_types")
-  CityImage CityImage[]
 }
 
 model Tour {
