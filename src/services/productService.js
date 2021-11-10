@@ -86,15 +86,24 @@ const getProductsByQuery = async (query, userId) => {
     parseAndFormat(query, eachQueryKey);
   }
 
-  const tours = await productDao.getTourCardsByQuery(query);
-  const tickets = await productDao.getTicketCardsByQuery(query);
+  let tours = await productDao.getTourCardsByQuery(query);
+  let tickets = await productDao.getTicketCardsByQuery(query);
   tickets.forEach((el) => {
     const { standardPrice: price } = el;
     el['price'] = price;
     delete el.standardPrice;
   });
+  if (!tours) {
+    tours = [];
+  }
+  if (!tickets) {
+    tickets = [];
+  }
 
   let products = tours.concat(tickets);
+  if (products.length === 0) {
+    return products;
+  }
 
   products.filter((el) => (el = getOrderedProductData(el)));
   const data = [];
@@ -174,8 +183,6 @@ const filterByAvailableDate = (availableDate, data) => {
     const { startDate, endDate, expireDate } = product;
 
     if (startDate && endDate) {
-      console.log(startDate, minDate, endDate, maxDate);
-      console.log(startDate < minDate, endDate > maxDate);
       if (startDate < minDate && endDate > maxDate) {
         filteredData.push(product);
       }
@@ -215,17 +222,7 @@ const filterByReviewScore = (reviewScore, data) => {
 };
 
 const filterByConfirmType = async (data) => {
-  const products = await productDao.getProductsByOptionName('즉시확정');
-  const productIdArr = products.map((el) => (el = el.id));
-
-  const filteredData = [];
-  for (let id of productIdArr) {
-    for (let product of data) {
-      if (id === product.id) {
-        filteredData.push(product);
-      }
-    }
-  }
+  const filteredData = data.filter((el) => el.quickBooking === true);
   return filteredData;
 };
 
@@ -262,7 +259,7 @@ const getOrderedProductData = (productData) => {
   productData['id'] = id;
   productData['price'] = price;
   productData['offerPrice'] = discountRate
-    ? Math.round(price * (1 - discountRate))
+    ? Math.round(price - price * discountRate)
     : price;
   productData['title'] = productName;
   if (createdAt) {

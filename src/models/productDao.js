@@ -131,7 +131,6 @@ const getTourCardsByQuery = async (query) => {
   let main, filterdIdArr;
   if (category) {
     main = category.main;
-
     const categoryData = await prisma.mainCategory.findUnique({
       where: {
         query: main,
@@ -244,7 +243,7 @@ const getTicketCardsByQuery = async (query) => {
 
   const { id: cityId } = await prisma.city.findUnique({
     where: {
-      enghlishName: city,
+      englishName: city,
     },
     select: {
       id: true,
