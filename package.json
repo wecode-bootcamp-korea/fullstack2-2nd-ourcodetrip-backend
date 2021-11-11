@@ -6,7 +6,8 @@
   "scripts": {
     "start": "nodemon --exec babel-node ./src/server.js",
     "dev": "cat .env.development > .env && nodemon --exec babel-node ./src/server.js",
-    "test": "cat .env.test > .env && npx prisma migrate reset -f && jest --detectOpenHandles --runInBand --coverage"
+    "test": "cat .env.test > .env && npx prisma migrate reset -f && jest --detectOpenHandles --runInBand --coverage",
+    "deploy": "cat .env.deployment > .env && nodemon --exec babel-node ./src/server.js"
   },
   "repository": {
     "type": "git",

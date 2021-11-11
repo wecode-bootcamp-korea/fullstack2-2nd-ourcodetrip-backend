@@ -6,7 +6,6 @@ const getProductList = async (req, res, next) => {
     const userId = req.userId;
     const query = req.query;
     const { city } = query;
-    console.log(city);
     if (!city) throw new BadRequestError('Bad Request, city query must exist');
 
     const products = await productService.getProductsByQuery(query, userId);

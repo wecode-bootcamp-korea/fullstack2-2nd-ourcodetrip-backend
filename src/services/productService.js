@@ -168,8 +168,11 @@ const getFilteredData = async (query, data) => {
 };
 
 const filterBySubCategoryId = async (subQuery, data) => {
-  const subCategoryId = await productDao.getSubCategoryIdByQuery(subQuery);
-  const filteredData = data.filter((product) => product.id === subCategoryId);
+  const subCategoryName = await productDao.getSubCategoryNameByQuery(subQuery);
+  const filteredData = data.filter(
+    (product) => product.category === subCategoryName
+  );
+  console.log(filteredData);
   return filteredData;
 };
 
