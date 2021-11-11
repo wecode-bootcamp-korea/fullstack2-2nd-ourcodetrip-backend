@@ -20,7 +20,6 @@ const updateUserProfile = async (req, res, next) => {
     if (!userId) throw new UnauthorizedError();
 
     const updateData = req.body;
-    console.log(updateData);
     const userProfile = await userService.updateUserProfile(userId, updateData);
     res.status(200).json({ message: 'updated', data: userProfile });
   } catch (err) {

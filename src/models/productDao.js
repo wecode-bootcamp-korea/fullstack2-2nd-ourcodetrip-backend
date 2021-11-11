@@ -161,8 +161,6 @@ const getTourCardsByQuery = async (query) => {
     },
   });
 
-  console.log(dataObj);
-
   const { id: cityId } = dataObj;
 
   return await prisma.tour.findMany({
@@ -320,16 +318,16 @@ const getClassificationNameById = async (classificationId) => {
   return name;
 };
 
-const getSubCategoryIdByQuery = async (query) => {
-  const { id } = await prisma.subCategory.findUnique({
+const getSubCategoryNameByQuery = async (query) => {
+  const { name } = await prisma.subCategory.findUnique({
     where: {
       query,
     },
     select: {
-      id: true,
+      name: true,
     },
   });
-  return id;
+  return name;
 };
 
 const getProductsByOptionName = async (optionListName) => {
@@ -510,7 +508,7 @@ export default {
   getClassificationNameById,
   getTourCardsByQuery,
   getTicketCardsByQuery,
-  getSubCategoryIdByQuery,
+  getSubCategoryNameByQuery,
   getProductsByOptionName,
   getWishCountByProductId,
   getTourDetailInfoByProductId,
